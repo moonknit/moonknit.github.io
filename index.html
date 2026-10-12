@@ -585,6 +585,14 @@
               등록·관리하는 Service형 Dynamic MCP Registry입니다.
               API와 Agent 사이의 연동 계층을 설계·구현했습니다.
             </p>
+            <p class="work-note">
+              <strong>비슷한 서비스:</strong> Uber의 <strong>MCP Gateway</strong>(2026.10 공개).
+              기존 서비스 API를 MCP 도구로 바꿔 한곳에서 등록·통제하는 Registry(제어면)와
+              Proxy(데이터면)로 구성되며, 800개 이상의 MCP 서버와 5,000개 이상의 도구를 호스팅한다고 알려져 있습니다.
+              mflux는 같은 문제(기존 API → Agent 도구, 등록·관리·프록시)를 서비스 단위로 푼 구조입니다.
+              다만 Uber는 IDL 자동 수집과 도구 단위 접근 제어·마스킹까지 갖춘 회사 규모 플랫폼이고,
+              mflux는 설정 기반 등록·Hot-reload·QoS에 초점을 둔 점이 다릅니다.
+            </p>
             <div class="shots">
               <div class="shots-frame">
                 <img src="images/mflux/01.jpg" alt="Dynamic MCP Registry 홈">
