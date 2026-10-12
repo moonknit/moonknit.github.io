@@ -500,20 +500,17 @@
           </div>
           <div class="work-tags">
             <span>Multi-Agent</span>
-            <span>A2A · LangGraph</span>
             <span>FDE Demo</span>
           </div>
           <div class="work-body">
             <p>
               AI Agent FDE(Forward Deployed Engineer) 시나리오를 보여주는 통합 Demo Hub입니다.
-              A2A 규격과 LangGraph 기반 Agent 위에서 문서 요약, PPT 초안 생성, 문서 스캔/OCR 같은
-              문서 업무를 채팅과 작업 화면으로 풀어냈습니다.
+              Multi-Agent·인증을 묶어 문서/PPT 등 업무 도구 시나리오를 구성했습니다.
             </p>
             <p class="work-note">
               <strong>기여:</strong> Backend·Frontend 전체 구성.
-              Agent 중 <strong>문서 요약</strong>, <strong>PPT 초안 생성</strong>
-              (용도·청중·핵심 내용·분량 확인 → 개요 직접 수정 → 슬라이드 생성 → PPTX/PDF),
-              <strong>문서 스캔/OCR</strong>(파일별 구조화 → PDF/엑셀)을 직접 구현했습니다.
+              Agent 중 <strong>문서 요약</strong>, <strong>PPT 초안 생성</strong>,
+              <strong>문서 스캔/OCR</strong>을 직접 구현했습니다.
               나머지 Agent 2개는 동료 작업입니다.
             </p>
             <div class="shots">
@@ -656,13 +653,44 @@
 
     <section id="notes" aria-labelledby="notes-title">
       <p class="section-label">Engineering Notes</p>
-      <h2 class="section-title" id="notes-title">코딩 에이전트를 통제하는 설계</h2>
+      <h2 class="section-title" id="notes-title">데모 대신 설계로 정리한 작업</h2>
       <p class="section-desc">
-        위 데모가 "에이전트를 만드는 일"이라면, 이쪽은 이미 있는 코딩 에이전트를 어떻게 다룰지에 대한 일입니다.
-        회사 비공개 저장소의 프로젝트라 라이브 데모 대신 설계 인사이트를 정리했습니다.
+        라이브 데모가 없는 회사 비공개 저장소 작업입니다.
+        MCP 프로토콜 템플릿과, 범용 코딩 에이전트를 통제하는 하네스를 정리했습니다.
       </p>
 
       <div class="works">
+        <article class="work">
+          <div class="work-head">
+            <h3 class="work-name">nestjs-mcp-boilerplate</h3>
+            <span class="work-period">2026.09 – 2026.10</span>
+          </div>
+          <div class="work-tags">
+            <span>MCP</span>
+            <span>NestJS</span>
+            <span>MRTR</span>
+            <span>2026-07-28</span>
+          </div>
+          <div class="work-body">
+            <p>
+              MCP 서버를 복제해 바로 쓰기 위한 NestJS Streamable HTTP 템플릿입니다.
+              Redis event store와 로컬 데모 IdP / OAuth CLI를 포함합니다.
+            </p>
+            <ul class="insights">
+              <li><strong>2026-07-28 프로토콜 + MRTR form elicitation.</strong>
+                <code>tools/call</code>이 <code>input_required</code>를 반환해,
+                Agent 레이어를 거치지 않고 MCP가 사용자 입력을 직접 수용합니다.
+                <code>conf_badge_draft</code>로 데모했습니다.</li>
+              <li><strong>discover → describe → execute.</strong>
+                <code>/mcp-meta</code>에 메타 도구 세 개만 올려 두고,
+                대규모 tool 카탈로그를 <code>tools/list</code>에 전량 나열하지 않고도 찾고 실행합니다.</li>
+              <li><strong>두 protocol era를 한 엔드포인트에.</strong>
+                2025-era(세션형)와 2026-era(stateless)를 같은 <code>/mcp</code>에서 라우팅하고,
+                elicitation은 2026 요청에서만 동작합니다.</li>
+            </ul>
+          </div>
+        </article>
+
         <article class="work">
           <div class="work-head">
             <h3 class="work-name">specforge</h3>
@@ -712,6 +740,7 @@
         </p>
         <p>
           Agent가 기존 API·서비스를 Tool로 쓰도록 하는 인증·MCP·서비스 계층까지 함께 설계합니다.
+          NestJS MCP 보일러플레이트로 2026-07-28 MRTR elicitation과 discover/describe/execute 패턴을 담았고,
           OAuth 기반 사내 인증 서버(agent-auth)도 직접 구축했습니다.
         </p>
         <p>
