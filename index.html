@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>최문호 — AI Native Engineer</title>
+  <meta name="description" content="26년차 Senior Software Engineer. AI Agent를 만들고, 범용 코딩 에이전트를 통제하는 개발 환경까지 설계하는 AI Native 포트폴리오." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #121820;
+      --ink-soft: #334155;
+      --muted: #64748b;
+      --paper: #f5f7f6;
+      --line: rgba(18, 24, 32, 0.12);
+      --accent: #0f766e;
+      --accent-soft: #d8efe9;
+      --font-display: "Noto Serif KR", "Apple SD Gothic Neo", serif;
+      --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif;
+      --max: 44rem;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.7;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      background:
+        radial-gradient(ellipse 80% 45% at 8% -5%, rgba(15, 118, 110, 0.1), transparent 55%),
+        linear-gradient(180deg, #f8faf9 0%, var(--paper) 100%);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; }
+
+    .wrap {
+      width: min(100% - 2rem, var(--max));
+      margin-inline: auto;
+    }
+
+    /* —— Hero —— */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      align-content: center;
+      padding: 4rem 0 3rem;
+      gap: 1.1rem;
+    }
+
+    .hero-brand {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.8rem, 9vw, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+
+    .hero-role {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .hero-lead {
+      margin: 0;
+      max-width: 36rem;
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+      font-weight: 400;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+      width: fit-content;
+      padding: 0.75rem 1.15rem;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .hero-cta:hover { background: var(--accent); }
+
+    /* —— Section —— */
+    section { padding: 3.5rem 0 0.5rem; }
+
+    .section-label {
+      margin: 0 0 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 3.5vw, 1.9rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin: 0 0 0.6rem;
+    }
+
+    .section-desc {
+      margin: 0 0 1.75rem;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    /* —— Works: stacked, no side collision —— */
+    .works {
+      display: grid;
+      gap: 0;
+    }
+
+    .work {
+      display: block;
+      padding: 1.4rem 0;
+      border-top: 1px solid var(--line);
+      text-decoration: none;
+    }
+
+    .work:last-child { border-bottom: 1px solid var(--line); }
+
+    .work-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.35rem 1rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .work-name {
+      margin: 0;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .work-name a {
+      text-decoration: none;
+    }
+
+    .work-name a:hover { color: var(--accent); }
+
+    .shots {
+      margin: 0.95rem 0 0.85rem;
+    }
+
+    .shots-frame {
+      position: relative;
+      background: #10161c;
+      border: 1px solid var(--line);
+    }
+
+    .shots-frame img {
+      display: none;
+      width: 100%;
+      height: auto;
+    }
+
+    .shots-frame img.is-active { display: block; }
+
+    .shots-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2rem;
+      height: 2rem;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(18, 24, 32, 0.72);
+      color: #fff;
+      font-size: 1.25rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .shots-nav:hover { background: rgba(15, 118, 110, 0.92); }
+
+    .shots-prev { left: 0.55rem; }
+    .shots-next { right: 0.55rem; }
+
+    .shots[data-single] .shots-nav { display: none; }
+
+    .shots-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-top: 0.4rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .shots-cap { color: var(--ink-soft); }
+
+    .work-period {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .work-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0 0 0.75rem;
+    }
+
+    .work-tags span {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      background: var(--accent-soft);
+      padding: 0.15rem 0.45rem;
+    }
+
+    .work-body p {
+      margin: 0 0 0.7rem;
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+    }
+
+    .work-note {
+      margin: 0 0 0.7rem;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      padding: 0.7rem 0.85rem;
+      background: rgba(18, 24, 32, 0.04);
+      border-left: 3px solid var(--accent);
+      color: var(--ink-soft);
+    }
+
+    .work-note strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .work-url {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      word-break: break-all;
+    }
+
+    .insights {
+      margin: 0 0 0.7rem;
+      padding-left: 1.15rem;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+
+    .insights li { margin-bottom: 0.45rem; }
+    .insights strong { color: var(--ink); font-weight: 600; }
+
+    .hero-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
+    .hero-links .hero-cta { margin-top: 0; }
+    .hero-cta.is-secondary { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+    .hero-cta.is-secondary:hover { background: var(--ink); color: #fff; }
+
+    /* —— Access / Auth —— */
+    .access-box {
+      margin: 0 0 1.5rem;
+      padding: 1.1rem 1.15rem;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .access-box h3 {
+      margin: 0 0 0.55rem;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .access-box p {
+      margin: 0 0 0.55rem;
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+    }
+
+    .access-box p:last-child { margin-bottom: 0; }
+
+    .access-box ul {
+      margin: 0.4rem 0 0.55rem;
+      padding-left: 1.2rem;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+
+    .access-box li { margin-bottom: 0.3rem; }
+
+    /* —— About —— */
+    .about-text p {
+      margin: 0 0 0.85rem;
+      color: var(--ink-soft);
+      font-size: 0.98rem;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .comp-list {
+      list-style: none;
+      margin: 1.5rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .comp-list li {
+      display: grid;
+      grid-template-columns: 7.5rem 1fr;
+      gap: 0.6rem;
+      padding-bottom: 0.55rem;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.95rem;
+    }
+
+    .comp-list strong {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent);
+      padding-top: 0.1rem;
+    }
+
+    .comp-list span { color: var(--ink-soft); }
+
+    @media (max-width: 520px) {
+      .comp-list li { grid-template-columns: 1fr; gap: 0.15rem; }
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding: 1.4rem 0 2.5rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    footer .name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 14mm 15mm 16mm;
+      }
+
+      html, body {
+        background: #fff !important;
+        color: #121820 !important;
+        font-size: 10.5pt;
+        line-height: 1.55;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .hero-cta { display: none !important; }
+
+      .wrap { width: 100%; margin: 0; }
+
+      .hero {
+        min-height: 0;
+        padding: 0 0 8mm;
+        gap: 4pt;
+        border-bottom: 1px solid rgba(18, 24, 32, 0.15);
+        margin-bottom: 5mm;
+      }
+
+      .hero-brand { font-size: 24pt; }
+      .hero-role { font-size: 10.5pt; color: #0f766e !important; }
+      .hero-lead { font-size: 10pt; color: #334155 !important; }
+
+      section { padding: 5mm 0 0; }
+
+      .section-title { font-size: 14pt; }
+      .section-desc { margin-bottom: 3mm; font-size: 9.5pt; }
+
+      .access-box {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 4mm;
+        padding: 3mm 3.5mm;
+        background: #f7faf9 !important;
+      }
+
+      .access-box h3 { font-size: 10.5pt; }
+      .access-box p,
+      .access-box ul { font-size: 9.5pt; }
+
+      .work {
+        padding: 3.5mm 0;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .work-name { font-size: 12pt; }
+      .work-body p { font-size: 9.5pt; }
+      .insights { font-size: 9.5pt; }
+      .section-label, .section-title, .section-desc { break-after: avoid; page-break-after: avoid; }
+      .about-text p:first-child { break-before: avoid; }
+      .hero-links { display: none !important; }
+      .work-note {
+        font-size: 9pt;
+        background: rgba(18, 24, 32, 0.04) !important;
+      }
+      .shots { display: none !important; }
+
+      .work-url { font-size: 8.5pt; color: #0f766e !important; }
+
+      .about-text p,
+      .comp-list li { font-size: 9.5pt; }
+
+      footer {
+        margin-top: 6mm;
+        padding-top: 3mm;
+        font-size: 8.5pt;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <h1 class="hero-brand">최문호</h1>
+      <p class="hero-role">Senior Software Engineer · AI Native Engineer</p>
+      <p class="hero-lead">
+        AI를 단순히 쓰는 개발자가 아니라, 기존 소프트웨어 시스템에
+        AI Agent를 실제로 통합하는 Senior Engineer입니다.
+      </p>
+      <p class="hero-lead">
+        에이전트를 만들고, 범용 코딩 에이전트를 통제된 개발 환경 안에서 일하게 만드는 일도 합니다.
+      </p>
+      <div class="hero-links">
+        <a class="hero-cta" href="#works">공개 데모 보기 ↓</a>
+        <a class="hero-cta is-secondary" href="#notes">설계 노트 보기 ↓</a>
+      </div>
+    </header>
+
+    <section id="works" aria-labelledby="works-title">
+      <p class="section-label">Selected Works</p>
+      <h2 class="section-title" id="works-title">공개 AI Native 데모</h2>
+      <p class="section-desc">
+        Multi-Agent FDE Demo, Skill Repository, MCP Registry, Deep Research Agent —
+        public 환경에서 확인할 수 있는 최근 작업입니다.
+      </p>
+
+      <aside class="access-box" aria-label="데모 접속 안내">
+        <h3>데모 접속 · 인증 안내</h3>
+        <p>
+          일부 서비스는 로그인 시 <strong>OAuth 기반 인증 서버</strong>로 연결됩니다.
+          이 인증 서버(agent-auth)도 직접 구축했으며, Google 계정으로 가입·로그인한 뒤 사용할 수 있습니다.
+        </p>
+        <ul>
+          <li>로그인 화면에서 Google 계정으로 가입/로그인하면 됩니다.</li>
+          <li>로그인 후 원래 서비스로 리다이렉트가 원활하지 않으면, 해당 서비스 페이지로 다시 들어가 로그인을 한 번 더 시도해 주세요.</li>
+        </ul>
+      </aside>
+
+      <div class="works">
+        <article class="work">
+          <div class="work-head">
+            <h3 class="work-name"><a href="https://dev-fde-agent-lab.laivdata.com/demo" target="_blank" rel="noopener noreferrer">fde-agent-lab</a></h3>
+            <span class="work-period">2026.06 – 2026.09</span>
+          </div>
+          <div class="work-tags">
+            <span>Multi-Agent</span>
+            <span>MCP</span>
+            <span>FDE Demo</span>
+          </div>
+          <div class="work-body">
+            <p>
+              AI Agent FDE(Forward Deployed Engineer) 시나리오를 보여주는 통합 Demo Hub입니다.
+              Multi-Agent·MCP·인증을 묶어 문서/PPT 등 업무 도구 시나리오를 구성했습니다.
+            </p>
+            <p class="work-note">
+              <strong>기여:</strong> Backend·Frontend 전체 구성.
+              Agent 중 <strong>문서 요약</strong>, <strong>PPT 초안 생성</strong>,
+              <strong>문서 스캔/OCR</strong>을 직접 구현했습니다.
+              나머지 Agent 2개는 동료 작업입니다.
+            </p>
+            <div class="shots">
+              <div class="shots-frame">
+                <img src="images/fde/01.jpg" alt="문서 업무를 고르는 데모 허브">
+                <img src="images/fde/02.jpg" alt="문서 요약. 파일을 올리고 요약 방식을 고릅니다">
+                <img src="images/fde/03.jpg" alt="PPT 초안. 주제만으로 시작할 수 있습니다">
+                <img src="images/fde/04.jpg" alt="용도, 청중, 핵심 내용, 분량을 확인합니다">
+                <img src="images/fde/05.jpg" alt="만들어진 슬라이드 개요를 직접 고칩니다">
+                <img src="images/fde/06.jpg" alt="영수증 샘플을 표로 추출한 결과">
+                <img src="images/fde/07.jpg" alt="계약서와 동의서 초안을 고릅니다">
+                <button type="button" class="shots-nav shots-prev" aria-label="이전 화면">‹</button>
+                <button type="button" class="shots-nav shots-next" aria-label="다음 화면">›</button>
+              </div>
+              <div class="shots-meta">
+                <span class="shots-cap"></span>
+                <span class="shots-count"></span>
+              </div>
+            </div>
+            <a class="work-url" href="https://dev-fde-agent-lab.laivdata.com/demo" target="_blank" rel="noopener noreferrer">https://dev-fde-agent-lab.laivdata.com/demo</a>
+          </div>
+        </article>
+
+        <article class="work">
+          <div class="work-head">
+            <h3 class="work-name"><a href="https://dev-skill-faro.laivdata.com/" target="_blank" rel="noopener noreferrer">skill-faro</a></h3>
+            <span class="work-period">2026.04 – 2026.08</span>
+          </div>
+          <div class="work-tags">
+            <span>Agent Skill</span>
+            <span>Cursor</span>
+            <span>Claude Code</span>
+          </div>
+          <div class="work-body">
+            <p>
+              Cursor / Claude Code용 Agent Skill을 패키징·관리·배포하는 Repository입니다.
+              AI coding agent가 재사용할 수 있는 공통 Skill을 모아 개발 workflow를 표준화합니다.
+            </p>
+            <p><em>"내 컴퓨터에선 되는데요"를 "어느 에이전트 세션에서도 되는데요"로 바꾸는 중입니다.</em></p>
+            <div class="shots">
+              <div class="shots-frame">
+                <img src="images/faro/01.jpg" alt="Skill Faro 소개와 세 단계 사용 흐름">
+                <img src="images/faro/02.jpg" alt="평점순으로 보는 스킬 카탈로그">
+                <img src="images/faro/03.jpg" alt="관리용 스킬을 한 번 설치하는 매뉴얼">
+                <img src="images/faro/04.jpg" alt="찾기, 설치, 평가, 등록을 프롬프트로 처리합니다">
+                <img src="images/faro/05.jpg" alt="스킬 상세와 평점">
+                <button type="button" class="shots-nav shots-prev" aria-label="이전 화면">‹</button>
+                <button type="button" class="shots-nav shots-next" aria-label="다음 화면">›</button>
+              </div>
+              <div class="shots-meta">
+                <span class="shots-cap"></span>
+                <span class="shots-count"></span>
+              </div>
+            </div>
+            <a class="work-url" href="https://dev-skill-faro.laivdata.com/" target="_blank" rel="noopener noreferrer">https://dev-skill-faro.laivdata.com/</a>
+          </div>
+        </article>
+
+        <article class="work">
+          <div class="work-head">
+            <h3 class="work-name"><a href="https://dev-mflux.laivdata.com/" target="_blank" rel="noopener noreferrer">mflux</a></h3>
+            <span class="work-period">2025.11 – 2026.07</span>
+          </div>
+          <div class="work-tags">
+            <span>MCP Registry</span>
+            <span>Tool Interface</span>
+            <span>API Integration</span>
+          </div>
+          <div class="work-body">
+            <p>
+              기존 API를 AI Agent가 쓸 수 있는 MCP Tool로 추상화하고,
+              등록·관리하는 Service형 Dynamic MCP Registry입니다.
+              API와 Agent 사이의 연동 계층을 설계·구현했습니다.
+            </p>
+            <div class="shots">
+              <div class="shots-frame">
+                <img src="images/mflux/01.jpg" alt="Dynamic MCP Registry 홈">
+                <img src="images/mflux/02.jpg" alt="외부 API를 External Service로 등록합니다">
+                <img src="images/mflux/03.jpg" alt="노출할 API Adapter를 MCP Config로 묶습니다">
+                <img src="images/mflux/04.jpg" alt="서비스, 어댑터, 인스턴스 상태">
+                <button type="button" class="shots-nav shots-prev" aria-label="이전 화면">‹</button>
+                <button type="button" class="shots-nav shots-next" aria-label="다음 화면">›</button>
+              </div>
+              <div class="shots-meta">
+                <span class="shots-cap"></span>
+                <span class="shots-count"></span>
+              </div>
+            </div>
+            <a class="work-url" href="https://dev-mflux.laivdata.com/" target="_blank" rel="noopener noreferrer">https://dev-mflux.laivdata.com/</a>
+          </div>
+        </article>
+
+        <article class="work">
+          <div class="work-head">
+            <h3 class="work-name"><a href="https://deepresearch-dev.laivdata.com/" target="_blank" rel="noopener noreferrer">DeepResearch</a></h3>
+            <span class="work-period">2025.08 – 2026.06</span>
+          </div>
+          <div class="work-tags">
+            <span>Agent Engineering</span>
+            <span>ReAct</span>
+            <span>Context Compaction</span>
+            <span>Planning Tool</span>
+          </div>
+          <div class="work-body">
+            <p>
+              오픈소스 OpenManus의 ReAct(Reasoning / Action / Observation) 기본 구조를 확장한 Deep Research Agent입니다.
+              Web Search, 샌드박스 Code Execution, 계획 도구, 스킬을 조합해 길고 도구 의존적인 작업을 수행하도록
+              Observation 처리, 컨텍스트, 종료 제어를 다시 설계했습니다.
+            </p>
+            <ul class="insights">
+              <li><strong>장시간 에이전트는 컨텍스트 윈도우 한계보다 먼저 "컨텍스트 희석"으로 무너진다.</strong>
+                매 step마다 소형 LLM 한 번으로 원본 Observation 처리와 컨텍스트 압축을 함께 수행하고,
+                다음 step은 append-only 히스토리 대신 <em>goal + state + plan</em>으로 재시작합니다.
+                프리픽스 캐시 중심 대안은 프로토타입 후 산출물 품질 때문에 폐기했습니다.</li>
+              <li><strong>계획 도구는 에이전트의 뼈대가 된다.</strong>
+                최종 synthesis 턴을 보장하는 todo 진행으로, 요청의 일부만 답하고 끝나는 문제를 줄였습니다.</li>
+              <li><strong>종료는 분위기가 아니라 계약이다.</strong>
+                terminate 전에 구조화된 목표와 completion check를 실행합니다.
+                LLM은 분류하고, 코드가 결정하며, safety net이 나머지를 막아 불완전한 답변과 어긋난 종료 시점을 줄입니다.</li>
+            </ul>
+            <div class="shots">
+              <div class="shots-frame">
+                <img src="images/deepresearch/01.jpg" alt="요청을 받으면 plan 도구가 목표 달성 조건과 작업 단계를 먼저 세웁니다">
+                <img src="images/deepresearch/02.jpg" alt="Todo를 하나씩 진행하며 웹 검색 결과를 수집합니다">
+                <img src="images/deepresearch/03.jpg" alt="마지막 synthesis 턴에서 수집한 근거를 요약·결론으로 정리합니다">
+                <button type="button" class="shots-nav shots-prev" aria-label="이전 화면">‹</button>
+                <button type="button" class="shots-nav shots-next" aria-label="다음 화면">›</button>
+              </div>
+              <div class="shots-meta">
+                <span class="shots-cap"></span>
+                <span class="shots-count"></span>
+              </div>
+            </div>
+            <a class="work-url" href="https://deepresearch-dev.laivdata.com/" target="_blank" rel="noopener noreferrer">https://deepresearch-dev.laivdata.com/</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="notes" aria-labelledby="notes-title">
+      <p class="section-label">Engineering Notes</p>
+      <h2 class="section-title" id="notes-title">코딩 에이전트를 통제하는 설계</h2>
+      <p class="section-desc">
+        위 데모가 "에이전트를 만드는 일"이라면, 이쪽은 이미 있는 코딩 에이전트를 어떻게 다룰지에 대한 일입니다.
+        회사 비공개 저장소의 프로젝트라 라이브 데모 대신 설계 인사이트를 정리했습니다.
+      </p>
+
+      <div class="works">
+        <article class="work">
+          <div class="work-head">
+            <h3 class="work-name">specforge</h3>
+            <span class="work-period">2025.11 – 2026.08</span>
+          </div>
+          <div class="work-tags">
+            <span>AI-Assisted Development</span>
+            <span>Cursor</span>
+            <span>Agent Skills</span>
+            <span>Spec as SSOT</span>
+          </div>
+          <div class="work-body">
+            <p>
+              Cursor 같은 범용 코딩 에이전트를 통제된 개발 시스템으로 만드는 하네스입니다.
+              프로젝트를 <strong>요구사항 정리 → 계획 → 실행</strong> 흐름으로 진행시키며,
+              에이전트 스킬과 커맨드로 구현했습니다. 에이전트를 만드는 것이 아니라, 이미 있는 에이전트를 어떻게 다룰지를 설계한 작업입니다.
+            </p>
+            <ul class="insights">
+              <li><strong>채팅 컨텍스트는 기억이 아니다. 저장소의 명세 문서가 기억이다.</strong>
+                SRS를 단일 진실 공급원(SSOT)으로 삼고, 계획과 진행 상태를 파일에 둡니다.
+                새 세션이나 다른 에이전트도 프로젝트의 실제 현재 위치에서 이어서 작업합니다.</li>
+              <li><strong>자율성에는 경계가 필요하다.</strong>
+                Task마다 구현 전 범위 게이트, 구현 후 diff-Task 점검을 거칩니다.
+                막힌 Task는 재시도하지 않고 에스컬레이션하고, 작은 변경은 가벼운 경로로 처리합니다.</li>
+              <li><strong>문서·코드·테스트는 어긋난다. 정기적으로 맞춰야 한다.</strong>
+                drift-sweep 스킬이 코드와 테스트를 SRS에 맞추고 고아 코드를 정리하며,
+                wiki 스킬이 에이전트가 읽는 프로젝트 지식을 동기화합니다.</li>
+            </ul>
+            <p><em>재사용 가능한 스킬은 위의 skill-faro로 패키징해 Cursor와 Claude Code에서 공유합니다.</em></p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-title">
+      <p class="section-label">Profile</p>
+      <h2 class="section-title" id="about-title">무엇을 해왔는지</h2>
+      <div class="about-text">
+        <p>
+          26년간 C/C++ 시스템 프로그래밍부터 Backend, 검색·미디어·CDN·인프라,
+          Full-Stack, Cloud까지 소프트웨어 개발 전반을 경험했습니다.
+        </p>
+        <p>
+          최근에는 Knowledge Graph 기반 교육 서비스 위에서
+          LLM, AI Agent, ReAct, Tool Calling, MCP, RAG, Vector Search를
+          실제 시스템으로 구현하고 있습니다.
+        </p>
+        <p>
+          Agent가 기존 API·서비스를 Tool로 쓰도록 하는 인증·MCP·서비스 계층까지 함께 설계합니다.
+          OAuth 기반 사내 인증 서버(agent-auth)도 직접 구축했습니다.
+        </p>
+        <p>
+          별개의 영역으로, Cursor·Claude Code 같은 범용 코딩 에이전트를 통제된 개발 환경 안에서 일하게 만드는 하네스(specforge, skill-faro)도 만듭니다.
+          명세 문서를 단일 진실 공급원으로 삼아 프로젝트 상태를 에이전트 세션이 아닌 저장소에 두는 것이 핵심입니다.
+        </p>
+      </div>
+      <ul class="comp-list">
+        <li>
+          <strong>Agent Eng.</strong>
+          <span>ReAct, Context Compaction, Planning, Tool Calling, MCP, RAG, Multi-Agent</span>
+        </li>
+        <li>
+          <strong>AI-Assisted Dev</strong>
+          <span>Cursor, Claude Code, Agent Skills, Spec-driven Workflow, Drift Detection</span>
+        </li>
+        <li>
+          <strong>Auth</strong>
+          <span>OAuth, Google IdP, Agent / Service 인증</span>
+        </li>
+        <li>
+          <strong>Full-Stack</strong>
+          <span>Node.js, TypeScript, Java/Spring, React</span>
+        </li>
+        <li>
+          <strong>Infra</strong>
+          <span>C/C++, Linux, AWS, ECS, Kubernetes</span>
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      <div>
+        <span class="name">최문호</span>
+        · AI Native Portfolio
+      </div>
+      <div>데모 링크는 public 개발 환경 기준입니다.</div>
+    </footer>
+  </div>
+  <script>
+    document.querySelectorAll(".shots").forEach((root) => {
+      const frames = [...root.querySelectorAll("img")];
+      const cap = root.querySelector(".shots-cap");
+      const count = root.querySelector(".shots-count");
+      let index = 0;
+
+      if (frames.length < 2) root.dataset.single = "true";
+
+      const show = (next) => {
+        index = (next + frames.length) % frames.length;
+        frames.forEach((img, i) => img.classList.toggle("is-active", i === index));
+        cap.textContent = frames[index].alt;
+        count.textContent = frames.length > 1 ? `${index + 1} / ${frames.length}` : "";
+      };
+
+      root.querySelector(".shots-prev").addEventListener("click", () => show(index - 1));
+      root.querySelector(".shots-next").addEventListener("click", () => show(index + 1));
+      show(0);
+    });
+  </script>
+</body>
+</html>
