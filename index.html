@@ -353,8 +353,187 @@
 
     .comp-list span { color: var(--ink-soft); }
 
+    /* —— Stack strip —— */
+    .stack {
+      margin: 0 0 1.75rem;
+    }
+
+    .stack-print { display: none; }
+
+    .stack-label {
+      margin: 0 0 0.45rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+    }
+
+    .stack-track {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .stack-cell {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+      padding: 0.45rem 0.7rem;
+      cursor: pointer;
+    }
+
+    .stack-cell:hover { border-color: var(--accent); color: var(--accent); }
+
+    .stack-cell.is-on {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+
+    .stack-hint {
+      margin: 0.55rem 0 0;
+      font-size: 0.86rem;
+      color: var(--muted);
+      min-height: 1.4em;
+    }
+
+    .work.is-hidden { display: none; }
+
+    section.section-is-empty { display: none; }
+
+    .is-screen { display: none; }
+    body.is-live .is-screen { display: block; }
+    body.is-live .is-screen.is-hidden { display: none; }
+
+    /* —— DeepResearch loop —— */
+    .loop {
+      margin: 0.95rem 0 0.85rem;
+      padding: 0.9rem 1rem;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .loop-lead {
+      margin: 0 0 0.7rem;
+      font-size: 0.9rem;
+      color: var(--ink-soft);
+    }
+
+    .loop-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0 0 0.8rem;
+    }
+
+    .loop-step {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: #f8faf9;
+      color: var(--ink-soft);
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.35rem 0.6rem;
+      cursor: pointer;
+    }
+
+    .loop-step.is-on {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--ink);
+    }
+
+    .loop-board {
+      display: grid;
+      gap: 0.45rem;
+      margin: 0;
+    }
+
+    .loop-board div {
+      display: grid;
+      grid-template-columns: 4.2rem 1fr;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .loop-board dt {
+      margin: 0;
+      font-weight: 700;
+      font-size: 0.78rem;
+      color: var(--accent);
+      padding-top: 0.12rem;
+    }
+
+    .loop-board dd {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .loop-note {
+      margin: 0.75rem 0 0;
+      font-size: 0.88rem;
+      color: var(--ink);
+    }
+
+    /* —— Career eras —— */
+    .eras {
+      margin: 0 0 1rem;
+      padding: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .era {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 0.7rem 0.85rem;
+    }
+
+    .era > summary {
+      cursor: pointer;
+      list-style: none;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+
+    .era > summary::-webkit-details-marker { display: none; }
+
+    .era > summary::after {
+      content: "열기";
+      float: right;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .era[open] > summary::after { content: "접기"; }
+
+    .era-kicker {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.15rem;
+    }
+
+    .era p {
+      margin: 0.55rem 0 0;
+      color: var(--ink-soft);
+      font-size: 0.92rem;
+    }
+
     @media (max-width: 520px) {
       .comp-list li { grid-template-columns: 1fr; gap: 0.15rem; }
+      .loop-board div { grid-template-columns: 1fr; gap: 0.1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
     }
 
     footer {
@@ -390,7 +569,12 @@
         print-color-adjust: exact;
       }
 
-      .hero-cta { display: none !important; }
+      .hero-cta,
+      .stack-track,
+      .stack-hint,
+      .loop,
+      .is-screen,
+      .era > summary::after { display: none !important; }
 
       .wrap { width: 100%; margin: 0; }
 
@@ -446,6 +630,25 @@
       .about-text p,
       .comp-list li { font-size: 9.5pt; }
 
+      .stack { margin-bottom: 3mm; }
+      .stack-print {
+        display: block !important;
+        font-size: 9.5pt;
+        color: #334155 !important;
+        margin: 0;
+      }
+
+      .era {
+        border: 0;
+        padding: 0;
+        background: transparent !important;
+        break-inside: avoid;
+      }
+
+      .era > summary { cursor: default; }
+      .era > * { display: block !important; }
+      .era p { font-size: 9.5pt; }
+
       footer {
         margin-top: 6mm;
         padding-top: 3mm;
@@ -472,6 +675,19 @@
       </div>
     </header>
 
+    <div class="stack" id="stack" aria-label="한 스택">
+      <p class="stack-label">한 스택</p>
+      <p class="stack-print">인증 → MCP 도구 → 에이전트 → 개발자 워크플로 → 데모</p>
+      <div class="stack-track" role="group" aria-label="스택으로 작업 보기">
+        <button type="button" class="stack-cell" data-stack="auth" aria-pressed="false">인증</button>
+        <button type="button" class="stack-cell" data-stack="mcp" aria-pressed="false">MCP</button>
+        <button type="button" class="stack-cell" data-stack="agent" aria-pressed="false">에이전트</button>
+        <button type="button" class="stack-cell" data-stack="workflow" aria-pressed="false">워크플로</button>
+        <button type="button" class="stack-cell" data-stack="demo" aria-pressed="false">데모</button>
+      </div>
+      <p class="stack-hint" id="stack-hint">칸을 누르면 그 층의 작업만 남습니다. 다시 누르면 전체가 돌아옵니다.</p>
+    </div>
+
     <section id="works" aria-labelledby="works-title">
       <p class="section-label">Selected Works</p>
       <h2 class="section-title" id="works-title">공개 AI Native 데모</h2>
@@ -493,7 +709,7 @@
       </aside>
 
       <div class="works">
-        <article class="work">
+        <article class="work" data-stack="demo agent">
           <div class="work-head">
             <h3 class="work-name"><a href="https://dev-fde-agent-lab.laivdata.com/demo" target="_blank" rel="noopener noreferrer">fde-agent-lab</a></h3>
             <span class="work-period">2026.06 – 2026.09</span>
@@ -534,7 +750,7 @@
           </div>
         </article>
 
-        <article class="work">
+        <article class="work" data-stack="workflow">
           <div class="work-head">
             <h3 class="work-name"><a href="https://dev-skill-faro.laivdata.com/" target="_blank" rel="noopener noreferrer">skill-faro</a></h3>
             <span class="work-period">2026.04 – 2026.08</span>
@@ -569,7 +785,7 @@
           </div>
         </article>
 
-        <article class="work">
+        <article class="work" data-stack="mcp">
           <div class="work-head">
             <h3 class="work-name"><a href="https://dev-mflux.laivdata.com/" target="_blank" rel="noopener noreferrer">mflux</a></h3>
             <span class="work-period">2025.11 – 2026.07</span>
@@ -611,7 +827,7 @@
           </div>
         </article>
 
-        <article class="work">
+        <article class="work" data-stack="agent">
           <div class="work-head">
             <h3 class="work-name"><a href="https://deepresearch-dev.laivdata.com/" target="_blank" rel="noopener noreferrer">DeepResearch</a></h3>
             <span class="work-period">2025.08 – 2026.06</span>
@@ -639,6 +855,30 @@
                 terminate 전에 구조화된 목표와 completion check를 실행합니다.
                 LLM은 분류하고, 코드가 결정하며, safety net이 나머지를 막아 불완전한 답변과 어긋난 종료 시점을 줄입니다.</li>
             </ul>
+            <div class="loop" id="loop" hidden>
+              <p class="loop-lead">한 스텝을 누르면, 쌓인 히스토리 대신 <em>goal + state + plan</em>만 바뀝니다.</p>
+              <div class="loop-steps" role="tablist" aria-label="DeepResearch 한 루프">
+                <button type="button" class="loop-step is-on" role="tab" aria-selected="true" data-step="0">1 계획</button>
+                <button type="button" class="loop-step" role="tab" aria-selected="false" data-step="1">2 행동</button>
+                <button type="button" class="loop-step" role="tab" aria-selected="false" data-step="2">3 압축</button>
+                <button type="button" class="loop-step" role="tab" aria-selected="false" data-step="3">4 종료 검사</button>
+              </div>
+              <dl class="loop-board">
+                <div>
+                  <dt>goal</dt>
+                  <dd id="loop-goal"></dd>
+                </div>
+                <div>
+                  <dt>state</dt>
+                  <dd id="loop-state"></dd>
+                </div>
+                <div>
+                  <dt>plan</dt>
+                  <dd id="loop-plan"></dd>
+                </div>
+              </dl>
+              <p class="loop-note" id="loop-note"></p>
+            </div>
             <div class="shots">
               <div class="shots-frame">
                 <img src="images/deepresearch/01.jpg" alt="요청을 받으면 plan 도구가 목표 달성 조건과 작업 단계를 먼저 세웁니다">
@@ -668,7 +908,25 @@
       </p>
 
       <div class="works">
-        <article class="work">
+        <article class="work is-screen" data-stack="auth">
+          <div class="work-head">
+            <h3 class="work-name">agent-auth</h3>
+            <span class="work-period">2025.07 – 2026.06</span>
+          </div>
+          <div class="work-tags">
+            <span>OAuth</span>
+            <span>IdP</span>
+          </div>
+          <div class="work-body">
+            <p>
+              사내 서비스와 에이전트를 한 OAuth 레이어 뒤에 두는 인증 서버입니다.
+              Google 계정으로 가입·로그인하며, 위 데모 중 로그인이 필요한 서비스가 여기를 거칩니다.
+              라이브 데모 카드는 없고, 접속 안내에 적어 둔 그 서버입니다.
+            </p>
+          </div>
+        </article>
+
+        <article class="work" data-stack="mcp">
           <div class="work-head">
             <h3 class="work-name">nestjs-mcp-boilerplate</h3>
             <span class="work-period">2026.09 – 2026.10</span>
@@ -699,7 +957,7 @@
           </div>
         </article>
 
-        <article class="work">
+        <article class="work" data-stack="workflow">
           <div class="work-head">
             <h3 class="work-name">specforge</h3>
             <span class="work-period">2025.11 – 2026.08</span>
@@ -737,10 +995,29 @@
       <p class="section-label">Profile</p>
       <h2 class="section-title" id="about-title">무엇을 해왔는지</h2>
       <div class="about-text">
-        <p>
-          26년간 C/C++ 시스템 프로그래밍부터 Backend, 검색·미디어·CDN·인프라,
-          Full-Stack, Cloud까지 소프트웨어 개발 전반을 경험했습니다.
-        </p>
+        <div class="eras">
+          <details class="era">
+            <summary>
+              <span class="era-kicker">줌인터넷 · 2011–2021</span>
+              포털 검색 인프라. simplekv, sleipnir, BASS. 팀과 Technical Advisor.
+            </summary>
+            <p>
+              고속 키-밸류 저장소, 검색엔진 외부 캐시, Boost.Asio 소켓 서버를 설계했습니다.
+              sleipnir는 검색 서비스 전체 부하 기준 초당 처리량을 약 50건에서 150~200건으로 올렸습니다.
+              운영 평균 트래픽이 아니라, 부하를 걸었을 때 감당하던 용량입니다.
+            </p>
+          </details>
+          <details class="era">
+            <summary>
+              <span class="era-kicker">온네트 · 2004–2011</span>
+              Lucene 검색, CDN·파일 전송, 동영상 변환. P2P에서 다운로드가 끝나는 순간 UI가 멈추던 구조를 분리.
+            </summary>
+            <p>
+              검색엔진, 웹하드 전송, CDN Edge, 메신저·P2P·RSS 같은 소비자 앱을 만들고 애플리케이션 팀을 운영했습니다.
+              엔피3.0은 조각 파일 병합이 UI와 같은 스레드에서 돌아 완료 순간 화면이 멈췄고, 그 병합을 분리했습니다.
+            </p>
+          </details>
+        </div>
         <p>
           최근에는 Knowledge Graph 기반 교육 서비스 위에서
           LLM, AI Agent, ReAct, Tool Calling, MCP, RAG, Vector Search를
@@ -793,6 +1070,8 @@
     </footer>
   </div>
   <script>
+    document.body.classList.add("is-live");
+
     document.querySelectorAll(".shots").forEach((root) => {
       const frames = [...root.querySelectorAll("img")];
       const cap = root.querySelector(".shots-cap");
@@ -812,6 +1091,102 @@
       root.querySelector(".shots-next").addEventListener("click", () => show(index + 1));
       show(0);
     });
+
+    const stackHints = {
+      auth: "인증 서버입니다. 데모 카드는 없고, 로그인이 필요한 서비스가 여기를 거칩니다.",
+      mcp: "기존 API를 에이전트 도구로 등록하는 층입니다.",
+      agent: "에이전트 자체를 만든 작업입니다.",
+      workflow: "범용 코딩 에이전트를 통제하는 층입니다.",
+      demo: "여러 에이전트를 묶어 보여 주는 허브입니다.",
+    };
+    const stackCells = [...document.querySelectorAll(".stack-cell")];
+    const stackHint = document.getElementById("stack-hint");
+    const defaultHint = stackHint.textContent;
+    let stackOn = "";
+
+    const paintStack = () => {
+      stackCells.forEach((cell) => {
+        const on = cell.dataset.stack === stackOn;
+        cell.classList.toggle("is-on", on);
+        cell.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      document.querySelectorAll(".work").forEach((work) => {
+        const stacks = (work.dataset.stack || "").split(/\s+/);
+        const match = stacks.includes(stackOn);
+        const screenOnly = work.classList.contains("is-screen");
+        work.classList.toggle("is-hidden", screenOnly ? !match : Boolean(stackOn) && !match);
+      });
+      document.querySelectorAll("section").forEach((section) => {
+        const cards = [...section.querySelectorAll(".work")];
+        if (!cards.length) return;
+        const visible = cards.some((card) => !card.classList.contains("is-hidden"));
+        section.classList.toggle("section-is-empty", !visible);
+      });
+      stackHint.textContent = stackOn ? stackHints[stackOn] : defaultHint;
+    };
+
+    stackCells.forEach((cell) => {
+      cell.addEventListener("click", () => {
+        stackOn = stackOn === cell.dataset.stack ? "" : cell.dataset.stack;
+        paintStack();
+      });
+    });
+    paintStack();
+
+    const loop = document.getElementById("loop");
+    const loopFrames = [
+      {
+        goal: "요청의 달성 조건과 필수 항목을 구조화한다.",
+        state: "증거 없음. 아직 수집 전.",
+        plan: "draft. 마지막 synthesis 턴을 예약한다.",
+        note: "plan 도구가 목표와 todo를 세웁니다. 대화 히스토리를 붙이지 않습니다.",
+      },
+      {
+        goal: "요청의 달성 조건과 필수 항목을 구조화한다.",
+        state: "웹 검색 결과 한 묶음을 관찰로 받았다.",
+        plan: "running. 지금 할 todo만 남긴다.",
+        note: "도구를 호출합니다. 원본 observation은 다음 스텝에서 압축됩니다.",
+      },
+      {
+        goal: "요청의 달성 조건과 필수 항목을 구조화한다.",
+        state: "Collected Evidence / Working Synthesis / Next Action.",
+        plan: "running. 다음 할 일만 남긴다.",
+        note: "소형 LLM 한 번으로 observation 처리와 압축을 같이 합니다. 다음 think는 이 세 칸에서 재시작합니다.",
+      },
+      {
+        goal: "필수 항목이 채워졌는지 대조한다.",
+        state: "synthesis 초안.",
+        plan: "done이거나, 누락이면 계속.",
+        note: "LLM은 분류하고 코드가 결정합니다. terminate는 이 검사 뒤에만 허용합니다.",
+      },
+    ];
+
+    if (loop) {
+      loop.hidden = false;
+      const goal = document.getElementById("loop-goal");
+      const state = document.getElementById("loop-state");
+      const plan = document.getElementById("loop-plan");
+      const note = document.getElementById("loop-note");
+      const steps = [...loop.querySelectorAll(".loop-step")];
+
+      const showLoop = (index) => {
+        const frame = loopFrames[index];
+        goal.textContent = frame.goal;
+        state.textContent = frame.state;
+        plan.textContent = frame.plan;
+        note.textContent = frame.note;
+        steps.forEach((step, i) => {
+          const on = i === index;
+          step.classList.toggle("is-on", on);
+          step.setAttribute("aria-selected", on ? "true" : "false");
+        });
+      };
+
+      steps.forEach((step) => {
+        step.addEventListener("click", () => showLoop(Number(step.dataset.step)));
+      });
+      showLoop(0);
+    }
   </script>
 </body>
 </html>
